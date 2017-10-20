@@ -8,7 +8,9 @@ var primeTester = function(n) {
     	  console.log(i);
     		return false;
     	}
-  //if (typeof n !== 'number' || n < 1 || n % 1 !== 0) {
+
+    	
+  if (typeof n !== 'number' || n < 1 || n % 1 !== 0) {
     
   
   //       //console.log(n);
@@ -16,9 +18,9 @@ var primeTester = function(n) {
   //   // n isn't a number or n is less than 1 or n is not an integer
   
          
-  //   		return false;
+    		return false;
     	
-  //   }
+  }
     return true;
   }
   // TODO: return true if n is prime, false otherwise
