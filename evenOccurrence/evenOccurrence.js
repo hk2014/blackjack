@@ -33,20 +33,47 @@
 
 //7.implementation
 
-var evenOccurrence = function(arr) {
-  // Your code here.
-  for(var i = 0; i < arr.length; i++){
-  	for(var j = 0; j < arr.length; j++){
-  	if(arr[i] === arr[j]){
-  		if(arr.indexOf(arr[i]) !== arr.indexOf(arr[j])){
-  			 return arr[i];
+// var evenOccurrence = function(arr) {
 
-  		}
-  	}
+//   // Your code here.
+//   //var cnt = 0;
+//   for(var i = 0; i < arr.length; i++){
+//   	for(var j = 0; j < arr.length; j++){
+//   	if(arr[i] === arr[j]){
+//       cnt++
+//       if(cnt%2===0){
+//         return arr[i]
+//       console.log(arr[i])
+//     }
+//   }
+//   		// if(arr.indexOf(arr[i]) !== arr.indexOf(arr[j])){
+//     //     cnt++
+//     //     if(cnt%2 === 0)
+//     //       console.log('hi')
+//   		// 	 return arr[i];
+
+  		
+//   	  //return null
+//  }
+// }
+// };
+var evenOccurrence = function(arr){
+  var out = arr.reduce(function(total, el){
+    if(total[el]){
+      total[el]++;
+    }
+    else{
+      total[el]=1;
+    }
+    console.log(total);
+   return total; 
+  },{});
+for(var num in out){
+  if(out[num] %2 === 0){
+    return Number(num);
   }
-  	  //return null
- }
-
-
+}
+return null;
 };
-console.log(evenOccurrence([1,3,4,5,6,6]));
+
+console.log(evenOccurrence([1,3,3,4,5,5,6,6]));
