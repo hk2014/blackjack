@@ -34,8 +34,31 @@
  *  ]
  *
  */
+//create an empty object called frequencies 
+//loop through each char
+  //if char exists in frequencies
+    //increment count by one. 
+  //else
+    //just initialize the count by one.
 
 
 var characterFrequency = function(string) {
+  var obj = {};
+  var result = [];
+  for(var i = 0; i < string.length; i++){
+    if(obj[string[i]]){
+      obj[string[i]]++;
+    }else{
+      obj[string[i]]=1;
+    }
+    
+  }
+  for(var key in obj){
+    
+    result.push([key,obj[key]]);
+  }
   return result;
 };
+
+
+console.log(characterFrequency('kitty'))

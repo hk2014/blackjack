@@ -64,7 +64,7 @@ var evenOccurrence = function(arr){
     }
     else{
       total[el]=1;
-          console.log(total);
+          //console.log(total);
 
     }
    return total; 
