@@ -12,7 +12,11 @@
 *
  */
 
-var numbersToWords = {
+var Number = function(num){
+  var num = num.toString(10);
+  this.val = num;
+
+   this.numbersToWords = {
   0: 'zero',
   1: 'one',
   2: 'two',
@@ -42,7 +46,7 @@ var numbersToWords = {
   80: 'eighty',
   90: 'ninety',
 };
-var numbersToPlace = {
+ this.numbersToPlace = {
   10: 'ten',
   100: 'hundred',
   1000: 'thousand',
@@ -52,7 +56,56 @@ var numbersToPlace = {
   1000000000000000: 'quadrillion',
   1000000000000000000: 'quintillion',
 };
+ 
+};
 
 Number.prototype.toEnglish = function () {
   // return my value as english words
+  //in:number
+  //out: string
+  //console.log('345'.split(''));
+  var digits = this.val.split('');
+    console.log(digits.length);
+
+  if(digits.length === 1){
+ var number = parseInt(digits, 10);
+    console.log(number);  
+  }
+  if(digits.length === 2){
+      console.log(this.numbersToPlace[10]);
+
+  }
+   if(digits.length === 3){
+      console.log(this.numbersToPlace[1000]);
+
+  } 
+  if(digits.length === 4){
+      console.log(this.numbersToPlace[10000]);
+
+  }
+   if(digits.length === 5){
+      console.log(this.numbersToPlace[100000]);
+
+  }
+   if(digits.length === 6){
+      console.log(this.numbersToPlace[1000000]);
+
+  }
+  else{
+    var number = parseInt(digits, 10);
+    console.log(number);
+    //if(digits)
+
+  }
+  //console.log(this.val);
+  //console.log(digits);
+  //if(this.num >)
 };
+
+var test = new Number(30);
+//console.log(test);
+test.toEnglish();
+
+// Number.toEn{
+
+// }

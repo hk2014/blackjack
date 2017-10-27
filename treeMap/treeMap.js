@@ -123,7 +123,7 @@ Tree.prototype.removeChild = function(child) {
      })
     newTree.value // 2
     newTree.children[0].value // 4
-    console.log(newTree.children[1].value); // 6
+    console.log(newTree); // 6
     console.log(newTree.children[0].children[1].value) // 10
     newTree.children[1].children[1].value // 14
     //console.log(root1.value); // still 1
