@@ -27,20 +27,46 @@
   *
   */
 
-var phoneDigitsToLetters = {
-  0: '0',
-  1: '1',
-  2: 'ABC',
-  3: 'DEF',
-  4: 'GHI',
-  5: 'JKL',
-  6: 'MNO',
-  7: 'PQRS',
-  8: 'TUV',
-  9: 'WXYZ'
-};
 
-
-var telephoneWords = function(digitString) {
+function telephoneWords (digitString) { 
   // TODO: return every combination that can be spelled on a phone with these digits
+  //in:string
+  //out:arr
+
+  var phoneDigitsToLetters = {
+    0: "0",
+    1: "1",
+    2: "ABC",
+    3: "DEF",
+    4: "GHI",
+    5: "JKL",
+    6: "MNO",
+    7: "PQRS",
+    8: "TUV",
+    9: "WXYZ"
+  };
+  var result = [];
+  function trans (digits, el) {
+    el = el || "";
+    //base
+    if (!digits) {
+      result.push(el);
+      return;
+    }
+
+    var firstDigit = digits.slice(0,1),
+        characters = phoneDigitsToLetters[firstDigit];
+    for (var i = 0; i < characters.length; i++) {
+      var ch = characters[i];
+      trans(digits.slice(1), el + ch);
+    }
+  };
+  trans(digitString);
+  return result;
 };
+
+
+
+
+console.log(telephoneWords('2745'));
+
