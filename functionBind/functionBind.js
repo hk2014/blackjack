@@ -23,10 +23,20 @@
  *
 */
 
-var bind = function(
-) {
-  // TODO: Your code here
+var bind = function(func, val){
+	if(typeof func !=="function"){
+		console.log("not a function");
+	}
+	//return function(args ){
+		var args = Array.prototype.slice.call(arguments)
+		console.log(args);
+		//val.name = 'shawn';
+		//console.log(func());
+	//return func();
+	//}
 };
+
+  // TODO: Your code here
 
 /*
  * Function.prototype.bind:
@@ -52,6 +62,16 @@ var bind = function(
  * result === 'foobar'; // true
  *
 */
+
+ var alice = {
+    name: 'alice',
+    shout: function(){
+      console.log(this.name);
+    }
+  }
+//alice.shout();
+
+bind(alice.shout, alice);
 
 Function.prototype.bind = function(
 ) {
