@@ -25,7 +25,27 @@ makeChange(2) === 2
 */
 
 var makeChange = function(total) {
+	var cnt = 0;
+	var coin = [1, 2, 5, 10, 20, 50, 100, 200];
 
+	var trans = function(acc, ind){
+		if(acc === total){
+			cnt++;
+		}
+		else if(acc < total){
+			for(var i = ind; i < coin.length; i++){
+			trans(acc+coin[i],i);
+			//console.log(acc, coin[i]);
+		}
+		}
+		
+		//coin.forEach(function(el){
+		//	trans(acc+el,)
+		//});
+	};
+	trans(0,0);
+	return cnt;
 };
+console.log(makeChange(10));
 
 
