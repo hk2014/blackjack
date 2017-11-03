@@ -21,6 +21,22 @@
  */
 
 var mixEvents = function(obj) {
+
   // TODO: Your code here
+  var event = {};
+  obj.on = function(name, func){
+  	//console.log(func);
+  	event[name] = func;	
+  	//console.log(event);
+   };
+  obj.trigger = function(str){
+  	this.event[str]();
+  };
   return obj;
 };
+ var obj = mixEvents({ name: 'Alice', age: 30 });
+ obj.on('ageChange', function(){ 
+     //console.log('Age changed');
+  });
+ obj.age++;
+  obj.trigger('ageChange');
