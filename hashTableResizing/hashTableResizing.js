@@ -26,20 +26,48 @@ var makeHashTable = function() {
   var storageLimit = 4;
   var size = 0;
   
-  result.insert = function(/*...*/ 
+  result.insert = function(/*...*/key, value 
 ) {
     // TODO: implement `insert`
+      //get index from hash 
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    storage[index] = storage[index] || [];
+    this.remove(key);
+    storage[index].push([key,value]);
   };
 
-  result.retrieve = function(/*...*/ 
+  result.retrieve = function(key/*...*/ 
 ) {
     // TODO: implement `retrieve`
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    if(storage[index]){
+      for(var i = 0; i < storage[index].length; i++){
+        if(storage[index][i][0] === key){
+          return storage[i][1];
+        }
+      }
+    }
+
   };
 
-  result.remove = function(/*...*/ 
+  result.remove = function(key/*...*/ 
 ) {
     // TODO: implement `remove`
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    if(storage[index]){
+      for(var i = 0; i < storage[index].length; i++){
+        if(storage[index][i][0] === key){
+          storage[index].splice(i,1);
+        }
+      }
+    }
   };
+  // result.insert(3, 10);
+  // console.log(storage); 
+  // result.remove(3);
+  // console.log(storage);
+  //
 
   return result;
 };
+//makeHashTable();
