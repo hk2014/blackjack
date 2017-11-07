@@ -30,11 +30,42 @@
  * Constraint 2: Do this in constant space
  * Constraint 3: Do not mutate the original nodes in any way
  */
+var hasCycle = function(linkedList){
+  var unSeen = linkedList;
+  var seen = linkedList;
+  var isTrue = true;
 
-var Node = function(value) {
-  return { value: value, next: null };
+  while (seen) {
+    seen = seen.next;
+    if(isTrue) {
+      unSeen = unSeen;
+    } else {
+      unSeen = unSeen.next;
+    }
+    if (seen === unSeen) {
+      return true;
+    }
+    isTrue = !isTrue;
+  }
+
+  return false;
 };
 
-var hasCycle = function(linkedList) {
-  // TODO: implement me!
-};
+
+function Node (val) {
+    // TODO
+    var obj = {};
+    obj.value = val || null;
+    obj.next = null;
+    return { value: val, next: null };
+
+}
+
+  // var nodeA = Node('A');
+  // var nodeB = nodeA.next = Node('B');
+  // var nodeC = nodeB.next = Node('C');
+  // var nodeD = nodeC.next = Node('D');
+  // var nodeE = nodeD.next = Node('E');
+  // console.log(hasCycle(nodeA)); // => false
+  // nodeE.next = nodeB;
+  // console.log(hasCycle(nodeA)); // => true
