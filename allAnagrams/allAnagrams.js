@@ -14,4 +14,22 @@
 
 var allAnagrams = function(string) {
   // Your code here.
+  //in:str
+  //out:array
+  var arr = [];
+  var tran = function(str, letters){
+  	//base
+  	if(str.length === string.length){
+  		arr.push(str);
+  	}
+  	else{
+  		for(var i = 0; i < letters.length; i++){
+  			tran(str+letters[i], letters.slice(0,i).concat(letters.slice(i+1)))	
+  		}
+  	}
+  };
+  tran('', string);
+  return arr;
 };
+ var anagrams = allAnagrams('abc');
+ // console.log(anagrams); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
