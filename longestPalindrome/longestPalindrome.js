@@ -5,6 +5,54 @@
 * palindromes in the above string include "dad", "ete", " dad " (including
 * whitespace on each side of dad).
 */
+//in: string
+//out: string
+
 
 var longestPalindrome = function (string) {
+	var str;
+	for(var i = string.length; 0 < i; i--){
+		for(var j = 0; j < string.length; j++){
+				str = string.slice(j,i);
+    	if(str === str.split('').reverse().join('')){
+    		return str;
+    	}
+		}
+    
+	}
 };
+
+//console.log(longestPalindrome('a dad a'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
