@@ -1,69 +1,56 @@
-/*
- * Design and implement an LRU, or Least Recently Used, cache.
- *
- * An LRU cache gives O(1) get(key) and set(key, val) operations,
- * much like a hashtable, but once it reaches its limit for stored
- * number of items, removes the least recently used (i.e. the oldest
- * by get-date) item from the cache in O(1) time.
- *
- * For instance:
- *
- * var cache = new LRUCache(3); // limit of 3 items
- * cache.set("item1", 1);
- * cache.set("item2", 2);
- * cache.set("item3", 3);
- * cache.set("item4", 4);
- *
- * cache.get("item3") //=> 3
- * cache.get("item2") //=> 2
- * // item1 was removed because it was the oldest item by insertion/usage
- * cache.get("item1") //=> null
- *
- * // item4 is removed to make room, because it is the oldest by usage,
- * // which takes priority.
- * cache.set("item5", 5);
- *
- * // item3 is also removed, because it was retrieved before item2 was
- * // last retrieved.
- * cache.set("item6", 6);
- *
- * You will need a doubly-linked list (provided).
- */
-
 var LRUCache = function (limit) {
-  this.item = {};
+  this.items = {};
   this.cache = new List();
+  this.limit = limit || 10000;
   this.size = 0;
-
-  this.limit = limit;
-};
+  };
 
 var LRUCacheItem = function (val, key) {
-  this.val = val;
-  this.key = key;
-
+  this.val = val === undefined ? null : val;
+  this.key = key === undefined ? null : key;
   this.node = null;
-};
+  };
 
 LRUCache.prototype.size = function () {
   return this.size;
-};
+  };
 
 LRUCache.prototype.get = function (key) {
-
-  this.cache.moveToFront(this.items[key]);
-};
+  if (!(key in this.items)) { return null; }
+  var item = this.items[key];
+  this.promote(item);
+  return item.val;
+  };
 
 LRUCache.prototype.set = function (key, val) {
   var item;
-  if(key in this.items){
+  if (key in this.items) {
     item = this.items[key];
     item.val = val;
-    this.cache.moveToFront(item.node);
+    this.promote(item);
+  } else {
+    if (this.full()) { this.prune(); }
+    this.size += 1;
+    item = new LRUCacheItem(val, key);
+    item.node = this.cache.unshift(item);
+    this.items[key] = item;
   }
 };
 
 
+LRUCache.prototype.full = function () {
+  return this.size >= this.limit;
+};
+
+LRUCache.prototype.prune = function () {
+  var oldest = this.cache.pop();
+  delete this.items[oldest.key];
+  this.size = Math.max(0, this.size - 1);
+};
+
+LRUCache.prototype.promote = function (item) {
+  this.cache.moveToFront(item.node);
+};
 
 var List = function () {
   this.head = null;
@@ -76,12 +63,9 @@ var ListNode = function (prev, val, next) {
   this.next = next || null;
 };
 
-// Insert at the head of the list.
 List.prototype.unshift = function (val) {
-  // Empty list
   if (this.head === null && this.tail === null) {
     this.head = this.tail = new ListNode(null, val, null);
-  // Not empty list.
   } else {
     this.head = new ListNode(null, val, this.head);
     this.head.next.prev = this.head;
@@ -90,12 +74,9 @@ List.prototype.unshift = function (val) {
   return this.head;
 };
 
-// Delete at the head of the list.
 List.prototype.shift = function () {
-  // Empty list
   if (this.head === null && this.tail === null) {
     return null;
-  // Not empty list.
   } else {
     var head = this.head;
     this.head = this.head.next;
@@ -104,26 +85,19 @@ List.prototype.shift = function () {
   }
 };
 
-// Insert at the end of the list.
 List.prototype.push = function (val) {
-  // Empty list
   if (this.head === null && this.tail === null) {
     this.head = this.tail = new ListNode(null, val, null);
-  // Not empty list.
   } else {
     this.tail = new ListNode(this.tail, val, null);
     this.tail.prev.next = this.tail;
   }
-
   return this.tail;
 };
 
-// Delete at the end of the list.
 List.prototype.pop = function () {
-  // Empty list
   if (this.head === null && this.tail === null) {
     return null;
-  // Not empty list.
   } else {
     var tail = this.tail;
     this.tail = this.tail.prev;
@@ -132,7 +106,6 @@ List.prototype.pop = function () {
   }
 };
 
-// Move a node to the front of the List
 List.prototype.moveToFront = function (node) {
   if (node === this.tail) {
     this.pop();
@@ -141,16 +114,9 @@ List.prototype.moveToFront = function (node) {
   } else {
     node.delete();
   }
-
   node.prev = node.next = null;
-
-  // Don't delegate to shift, since we want to keep the same
-  // object.
-
-  // Empty list
   if (this.head === null && this.tail === null) {
     this.head = this.tail = node;
-  // At least one node.
   } else {
     this.head.prev = node;
     node.next = this.head;
@@ -158,7 +124,6 @@ List.prototype.moveToFront = function (node) {
   }
 };
 
-// Move a node to the end of the List
 List.prototype.moveToEnd = function (node) {
   if (node === this.head) {
     this.shift();
@@ -167,16 +132,9 @@ List.prototype.moveToEnd = function (node) {
   } else {
     node.delete();
   }
-
-  // Don't delegate to push, since we want to keep the same
-  // object.
-
   node.prev = node.next = null;
-
-  // Empty list
   if (this.head === null && this.tail === null) {
     this.head = this.tail = node;
-  // At least one node.
   } else {
     this.tail.next = node;
     node.prev = this.tail;
@@ -188,4 +146,3 @@ ListNode.prototype.delete = function () {
   if (this.prev) { this.prev.next = this.next; }
   if (this.next) { this.next.prev = this.prev; }
 };
-
